@@ -1,4 +1,4 @@
-package com.example.todolist;
+package egor.todolist.dao;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
