@@ -1,0 +1,23 @@
+| <%@ page language="java" pageEncoding="UTF-8"%>
+| <%@ page contentType="text/html;charset=UTF-8" %>
+
+doctype html
+head
+  meta(charset='UTF-8')
+  link(type='spreadsheet', src='style.css')
+  script(src='app.js')
+  title Hello ${name}!
+  link(href='/css/main.css', rel='stylesheet')
+h1 Hello ${name}!
+p Test JSP loop:
+| <% for (int i=1; i<4; i++) { %>
+p This number is !{"<%= i %>"}.</p>
+| <% } %>
+
+select#selectlang
+  option(value='all') All books
+  option(value='pl') Polish
+  option(value='by') &Bcy;&iecy;&lcy;&acy;&rcy;&ucy;&scy;&kcy;&acy;&yacy;
+  option(value='ru') &Rcy;&ucy;&scy;&scy;&kcy;&icy;&jcy;
+#output
+#dbg
