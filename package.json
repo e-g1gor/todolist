@@ -1,0 +1,36 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "Example Java todolist",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.9.4",
+    "babel-plugin-transform-jsx-classname-components": "^0.0.3",
+    "babel-plugin-transform-react-pug": "^7.0.1",
+    "browserify": "^16.5.1",
+    "npx": "^10.2.2",
+    "pug-cli": "^1.0.0-alpha6",
+    "stylus": "^0.54.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildJS": "npx --no-install babel src/main/webapp --out-dir src/main/webapp --extensions .jsx & npx --no-install browserify src/main/webapp/app.js -o src/main/webapp/js/bundle.js",
+    "buildCSS": "npx --no-install stylus src/main/webapp/css",
+    "buildJSP": "npx --no-install pug src/main/webapp/ --extension jsp --pretty",
+    "buildGUI": "npm run buildJS & npm run buildJSP & npm run buildCSS"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-g1gor/todolist.git"
+  },
+  "author": "Egor Klenin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/e-g1gor/todolist/issues"
+  },
+  "homepage": "https://github.com/e-g1gor/todolist#readme"
+}

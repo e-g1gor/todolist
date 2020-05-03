@@ -1,0 +1,7 @@
+{
+  "plugins": [
+    "babel-plugin-transform-react-pug",
+    "babel-plugin-transform-jsx-classname-components",
+    "@babel/plugin-transform-react-jsx"
+  ]
+}

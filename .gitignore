@@ -6,7 +6,7 @@ target/
 
 ### custom ###
 *.mwb.bak
-
+node_modules
 
 
 ### STS ###
