@@ -4,10 +4,11 @@ spring:
     username: todoapp
     password: password
     driver-class-name: com.mysql.jdbc.Driver
-  
   jpa:
     properties:
-      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        jdbc.batch_size: 5
+        dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate.ddl-auto: update
 
   mandatory-file-encoding: UTF-8
