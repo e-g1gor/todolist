@@ -1,0 +1,42 @@
+hoverShift = 4px
+
+materialHover()
+  position relative
+  top 0
+  left 0
+  border-radius hoverShift
+  transition top, left, box-shadow
+  transition-duration 0.1s
+  box-shadow hoverShift * 0.4 hoverShift * 0.4 rgba(0, 0, 0, 0.4)
+  // transition margin 0.5s
+  &:hover
+    top -(hoverShift * 0.5)
+    left -(hoverShift * 0.5)
+    box-shadow hoverShift * 0.8 hoverShift * 0.8 rgba(0, 0, 0, 0.4)
+
+
+body
+  display flex
+  flex-flow row nowrap
+  background-image url('/img/back.jpg')
+  background-position cover
+
+.list
+  display flex
+  flex-flow column nowrap
+  align-items center
+  margin-right 10px
+  width 300px
+  min-height 150px
+  background-color transparentify(#ddd,0.9)
+  materialHover()
+
+.card
+  display flex
+  flex-flow column nowrap
+  align-items center
+  margin 10px 0
+  width 270px
+  min-height 70px
+  background-color #fff
+  materialHover()

@@ -1,0 +1,6 @@
+{
+  "blocks": false,
+  "brackets": "never",
+  "colons": "never",
+  "semicolons": "never"
+}

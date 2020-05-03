@@ -1,44 +1,71 @@
-'use strict'
+'use strict';
 
+let React = require('react');
 
-// Show loaded books
-function render(data, error) {
-  if (error) {
-    output.innerHTML = JSON.stringify(data)
-    return
+let ReactDOM = require('react-dom');
+
+class Body extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: new Date()
+    };
   }
-  let output = document.getElementById('output')
-  let rez
-  if (typeof data === 'string')
-    rez = data
-  else
-    rez = `<table>${new Array(...data).map(x => "<tr><td>" + x.name + "</td></tr>").join("\n")}<table>`
-  output.innerHTML = rez
-}
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  render() {
+    let hello = 'Hello, world(if)!';
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      className: "list"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }, /*#__PURE__*/React.createElement("p", null, "Name")), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "list"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "list"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "card"
+    })));
+  }
+
+} // ENTRY POINT
 
 
-// Load books list, show result
-function getBooks(lang) {
-  fetch('/all')
-    .then(response => response.json())
-    .then(render)
-    .catch(err => render(err, false))
-}
-
-
-// ENTRY POINT
 window.onload = () => {
-  // Get all books
-  getBooks('all')
+  document.title = "JS loaded"; // document.getElementsByClassName("card").map(x=>x.addEventListener('click',()=>{alert('oppa!')}))
 
-  // If language changed, load new list
-  document
-    .getElementById('selectlang')
-    .addEventListener('change', (e) => {
-      // Show loading message
-      render('Загрузка...')
-      // Get data
-      let lang = e.target[e.target.selectedIndex].value.replace(/[^a-z]/igm, '')
-      getBooks(lang)
-    })
-}
+  ReactDOM.render( /*#__PURE__*/React.createElement(Body, null), document.getElementById('body'));
+};
