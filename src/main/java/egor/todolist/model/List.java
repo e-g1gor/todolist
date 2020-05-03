@@ -11,22 +11,22 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Books")
-public class Book {
+@Table(name = "lists")
+public class List {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "idbooks")
+  @Column(name = "idlist")
   private Long id;
 
   @Column(name = "name")
   private String name;
 
-  public Book() {
+  public List() {
 
   }
 
-  public Book(String name) {
+  public List(String name) {
         this.name = name;
     }
 }
