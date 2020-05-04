@@ -4,12 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
-import egor.todolist.model.List;
+import egor.todolist.model.ListCards;
 
 @Repository
-public interface ListRepository extends JpaRepository<List, Long> {
+public interface ListRepository extends JpaRepository<ListCards, Long> {
 
-  Optional<List> findById(Long id);
+  Optional<ListCards> findById(Long id);
 
-  Iterable<List> findByName(String name);
+  Iterable<ListCards> findByName(String name);
 }

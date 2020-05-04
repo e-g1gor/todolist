@@ -1,18 +1,13 @@
 package egor.todolist.model;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -36,19 +31,18 @@ public class Card {
   @Column(name = "order")
   private Long order;
 
-  @Column(name = "list")
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "list", referencedColumnName = "idlist")
-  private List list;
 
-  // @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  // private Set<List> list;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "list", referencedColumnName = "idlist")
+  private ListCards list;
 
   public Card() {
 
   }
 
-  public Card(String name) {
+  public Card(String name, String description, Long order) {
     this.name = name;
+    this.description = description;
+    this.order = order;
   }
 }

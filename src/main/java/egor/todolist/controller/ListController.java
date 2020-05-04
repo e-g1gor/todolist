@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import egor.todolist.dao.ListService;
-import egor.todolist.model.List;
+import egor.todolist.model.ListCards;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -25,7 +25,7 @@ public class ListController {
 
     if (id != null) {
       log.info("requested ID = " + id);
-      List list = listService.findByID(id).get();
+      ListCards list = listService.findByID(id).get();
       return "list[" + id + "].name = " + list.getName();
     }
 
