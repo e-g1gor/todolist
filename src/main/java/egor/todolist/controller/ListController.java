@@ -19,6 +19,11 @@ public class ListController {
   @Autowired
   ListService listService;
 
+  @GetMapping({ "/lists" })
+  public Iterable<CardList> getAll() {
+    return listService.findAll();
+  }
+
   @GetMapping({ "/list" })
   public Optional<CardList> getList(Model model, @RequestParam(value = "id", required = false) Long id,
       @RequestParam(value = "name", required = false) String name) {
