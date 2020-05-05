@@ -9,7 +9,7 @@
     <link href="/css/main.css" rel="stylesheet">
   </head>
   <body>
-    <div id="container">
+    <div id="board">
       <% Random rnd = new Random(); %>
       <% for (int i=1; i<4; i++) { %>
       <div class="list unselect">

@@ -3,34 +3,36 @@
 let React = require('react')
 let ReactDOM = require('react-dom')
 
-// class List extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { cards: ["some cards maybe?"] };
-//   }
-//   render() {
-//     return pug`.list`
-//   }
-// }
 
 
-class Kanban extends React.Component {
+async function syncLists() {
+  let rezult = {}
+  let cards
+  let lists = await (await fetch("/lists")).json()
+  // Load data
+  for (let list of lists) {
+    rezult[list.id] = { name: list.name, cards: {} }
+    cards = await (await fetch("/cards?list=" + list.id)).json()
+    for (let card of cards)
+      rezult[list.id].cards[card.id] = { name: card.name }
+  }
+  // Return
+  return rezult
+}
+
+class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       date: new Date(),
-      lists: {
-        list1: ["card1?", "card2 maybe"],
-        list2: ["dsfasfasf?", "qwef", "dsfasfasf?", "qwef", "dsfasfasf?", "qwef"],
-        oof: ["oof"]
-      }
+      lists: {}
     };
   }
 
   componentDidMount() {
     this.timerID = setInterval(
       () => this.tick(),
-      1000
+      300
     );
   }
 
@@ -38,33 +40,39 @@ class Kanban extends React.Component {
     clearInterval(this.timerID);
   }
 
-  tick() {
+
+  // Sync dada
+  async tick() {
+    let lists = await syncLists()
     this.setState({
-      date: new Date()
+      date: new Date(),
+      lists: lists
     });
   }
 
   render() {
     return pug`
     p.white React example: #{this.state.date.toLocaleTimeString()}.
-    each list in Object.keys(this.state.lists)
+    each listid in Object.keys(this.state.lists)
+      - let list = this.state.lists[listid]
       .list.unselect
-        p=list
-        each card in this.state.lists[list]
-          .card
-            p=card
+        h1=list.name
+        each cardid in Object.keys(list.cards)
+          - let card = list.cards[cardid]
+          .card(data-key=cardid)
+            p=card.name
         `;
   }
 }
 
-
+// ☒
 
 // ENTRY POINT
 window.onload = () => {
   document.title = "JS loaded"
   // document.getElementsByClassName("card").map(x=>x.addEventListener('click',()=>{alert('oppa!')}))
   ReactDOM.render(
-    pug`Kanban`,
-    document.getElementById('container')
+    pug`Board`,
+    document.getElementById('board')
   )
 }
