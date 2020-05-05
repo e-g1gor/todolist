@@ -1,47 +1,49 @@
 package egor.todolist.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import egor.todolist.dao.CardService;
 import egor.todolist.model.Card;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@Slf4j
 public class CardController {
 
   @Autowired
   CardService cardService;
 
+  @GetMapping({ "/cards" })
+  public Iterable<Card> getAll(Model model, @RequestParam(value = "list", required = false) Long list) {
+    if(list!=null)
+      return cardService.findByList(list);
+    return cardService.findAll();
+  }
+
   @GetMapping({ "/card" })
-  public String getByID(Model model, @RequestParam(value = "id", required = false) Long id,
-      @RequestParam(value = "name", required = false) String name,
-      @RequestParam(value = "list", required = false) Long list) {
-        
-    log.info("card requested");
+  public Card getCard(Model model, @RequestParam(value = "id", required = false) Long id,
+      @RequestParam(value = "name", required = false) String name) {
 
     if (id != null) {
-      log.info("requested ID = " + id);
-      Card cards = cardService.findByID(id).get();
-      return "card[" + id + "].name = " + cards.getName();
+      Optional<Card> card = cardService.findByID(id);
+      if (!card.isPresent())
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Card[" + id + "] not found.");
+      return card.get();
     }
 
     if (name != null) {
-      log.info("requested name = " + name);
-      return "card[" + name + "] = " + cardService.findByName(name);
+      Optional<Card> card = cardService.findByName(name);
+      if (!card.isPresent())
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Card[" + name + "] not found.");
+      return card.get();
     }
-
-    if (list != null) {
-      log.info("requested list = " + list);
-      return "card[" + list + "] = " + cardService.findByList(list);
-    }
-
-
-    return "cards " + cardService.findAll();
-
+    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You just asked for nothing.");
   }
+
 }

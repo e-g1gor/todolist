@@ -5,27 +5,31 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import egor.todolist.model.ListCards;
+import egor.todolist.model.Card;
+import egor.todolist.model.CardList;
 
 @Service
+
 public class ListService {
 
     @Autowired
     private ListRepository listRepository;
+    @Autowired
+    private CardRepository cardRepository;
 
-    public Iterable<ListCards> findAll() {
+    public Iterable<CardList> findAll() {
         return listRepository.findAll();
     }
 
-    public Optional<ListCards> findByID(Long id) {
-        Optional<ListCards> list = listRepository.findById(id);
-        // if(list.isPresent())
-        //     list.get().cards = cardRepository.findByListOrderByOrderAsc(id);
-        return list;
+    public Optional<CardList> findByID(Long id) {
+        return listRepository.findById(id);
     }
 
-    public Iterable<ListCards> findByName(String name) {
-        Iterable<ListCards> list = listRepository.findByName(name);
-        return list;
+    public Iterable<Card> getListCards(Long id) {
+        return cardRepository.findByListIdOrderByOrderAsc(id);
+    }
+
+    public Optional<CardList> findByName(String name) {
+        return listRepository.findByName(name);
     }
 }

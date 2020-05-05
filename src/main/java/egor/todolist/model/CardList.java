@@ -10,23 +10,14 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "lists")
-public class ListCards {
+@Data
+public class CardList {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "idlist")
   private Long id;
-
-  @Column(name = "name")
   private String name;
 
-  public ListCards() {
-
-  }
-
-  public ListCards(String name) {
-        this.name = name;
-    }
 }

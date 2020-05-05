@@ -1,6 +1,7 @@
 package egor.todolist.dao;
 
 import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
   Optional<Card> findById(Long id);
 
-  Iterable<Card> findByName(String name);
+  Optional<Card> findByName(String name);
 
-  Iterable<Card> findByListOrderByOrderAsc(Long list);
+  Iterable<Card> findByListIdOrderByOrderAsc(Long list);
 }

@@ -22,13 +22,13 @@ public class CardService {
         return card;
     }
 
-    public Iterable<Card> findByName(String name) {
-        Iterable<Card> card = cardRepository.findByName(name);
+    public Optional<Card> findByName(String name) {
+        Optional<Card> card = cardRepository.findByName(name);
         return card;
     }
 
     public Iterable<Card> findByList(Long list) {
-        Iterable<Card> card = cardRepository.findByListOrderByOrderAsc(list);
+        Iterable<Card> card = cardRepository.findByListIdOrderByOrderAsc(list);
         return card;
     }
 }

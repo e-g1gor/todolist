@@ -21,20 +21,14 @@ public class Card {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "idcard")
   private Long id;
-
-  @Column(name = "name")
   private String name;
-
-  @Column(name = "description")
   private String description;
-
-  @Column(name = "order")
   private Long order;
 
 
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "list", referencedColumnName = "idlist")
-  private ListCards list;
+  private CardList list;
 
   public Card() {
 
