@@ -1,0 +1,24 @@
+| <%@ page language="java" pageEncoding="UTF-8"%>
+| <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.Random" %>
+
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    script(src='/js/bundle.js')
+    title Hello ${name}!
+    link(href='/css/main.css', rel='stylesheet')
+  body
+    #container
+    
+      
+      | <% Random rnd = new Random(); %>
+      | <% for (int i=1; i<4; i++) { %>
+      .list.unselect
+        p <%= i %>
+        | <% for (int j=1; j<rnd.nextInt(6) + 1; j++) { %>
+        .card <%= j %>
+        | <% } %>
+      | <% } %>
+

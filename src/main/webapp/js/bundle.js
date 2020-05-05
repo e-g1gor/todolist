@@ -28979,13 +28979,27 @@ if (process.env.NODE_ENV === 'production') {
 
 let React = require('react');
 
-let ReactDOM = require('react-dom');
+let ReactDOM = require('react-dom'); // class List extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { cards: ["some cards maybe?"] };
+//   }
+//   render() {
+//     return pug`.list`
+//   }
+// }
 
-class Body extends React.Component {
+
+class Kanban extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: new Date()
+      date: new Date(),
+      lists: {
+        list1: ["card1?", "card2 maybe"],
+        list2: ["dsfasfasf?", "qwef", "dsfasfasf?", "qwef", "dsfasfasf?", "qwef"],
+        oof: ["oof"]
+      }
     };
   }
 
@@ -29004,38 +29018,17 @@ class Body extends React.Component {
   }
 
   render() {
-    let hello = 'Hello, world(if)!';
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-      className: "list"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }, /*#__PURE__*/React.createElement("p", null, "Name")), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    })), /*#__PURE__*/React.createElement("div", {
-      className: "list"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    })), /*#__PURE__*/React.createElement("div", {
-      className: "list"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "card"
-    })));
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
+      className: "white"
+    }, "React example: ", this.state.date.toLocaleTimeString(), "."), Object.keys(this.state.lists).map(list => {
+      return /*#__PURE__*/React.createElement("div", {
+        className: "list unselect"
+      }, /*#__PURE__*/React.createElement("p", null, list), this.state.lists[list].map(card => {
+        return /*#__PURE__*/React.createElement("div", {
+          className: "card"
+        }, /*#__PURE__*/React.createElement("p", null, card));
+      }));
+    }));
   }
 
 } // ENTRY POINT
@@ -29044,6 +29037,6 @@ class Body extends React.Component {
 window.onload = () => {
   document.title = "JS loaded"; // document.getElementsByClassName("card").map(x=>x.addEventListener('click',()=>{alert('oppa!')}))
 
-  ReactDOM.render( /*#__PURE__*/React.createElement(Body, null), document.getElementById('body'));
+  ReactDOM.render( /*#__PURE__*/React.createElement(Kanban, null), document.getElementById('container'));
 };
 },{"react":10,"react-dom":7}]},{},[17]);
