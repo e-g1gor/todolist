@@ -23,6 +23,7 @@ public class Card {
   private Long id;
   private String name;
   private String description;
+  @Column(name = "order_in_list")
   private Long order;
 
 

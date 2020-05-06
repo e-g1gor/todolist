@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import egor.todolist.model.Card;
+import lombok.extern.java.Log;
 
 @Service
+@Log
 public class CardService {
 
     @Autowired
@@ -31,4 +33,11 @@ public class CardService {
         Iterable<Card> card = cardRepository.findByListIdOrderByOrderAsc(list);
         return card;
     }
+
+	public void updateCard(Card card) {        
+    log.info("id = " + card.getId() +  "; name = " + card.getName());
+    Card newCard = cardRepository.findById(card.getId()).get();
+    newCard.setName(card.getName());
+    cardRepository.save(newCard);
+	}
 }
