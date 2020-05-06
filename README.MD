@@ -1,14 +1,40 @@
-Для серверной части использовать технологии Spring и Hibernate. База данных MongoDB.
+>Для серверной части использовать технологии Spring и Hibernate. База данных MongoDB.
 Для клиентской части использовать JSP.
 Работа с приложением с HTML страницы и с помощью REST-запросов.
-
 Возможность добавлять, просматривать, редактировать и удалять объекты.
+
+Приложение - простенький тудулист. Две таблицы - списки дел, и карточки, связанные со списками.
+
+![Скриншот](https://raw.githubusercontent.com/e-g1gor/todolist/master/scheme.png)
+
+База данных MySQL 8.0
+
+Создать модель можно c помощью SQL запросов из файла `src\main\resources\model\init scheme.sql`
+
+Записать в базу немного тестовых данных можно с помощью `\src\main\resources\model\test data insert.sql`
+
+---
+
+Для запуска из папки проекта в терминале выполнить:
+
+Win10 cmd: `mvnw spring-boot:run`
+
+bash: `./mvnw spring-boot:run`
 
 ---
 
 Для сборки некоторых файлов используется NodeJS.
 
-Stylus->CSS: `stylus src/main/webapp/css`
-Pug->JSP: `pug src/main/webapp/ --extension jsp --pretty`
-JSX->JS: `babel src/main/webapp --out-dir src/main/webapp --extensions .jsx`
-JS->JS: `browserify src/main/webapp/app.js -o src/main/webapp/js/bundle.js`
+Результаты сборки тоже сохраняются в репозиторий, поэтому самому собирать не обязательно, но вообще процедура такая:
+
+В терминале выполнить: `npm i -g npx` , потом из папки проекта: `npm i`
+
+Потом для сборки можно запускать в терминале:
+
+Stylus -> CSS: `npm run buildCSS`
+
+Pug -> JSP: `npm run buildJSP`
+
+JSX -> JS: `npm run buildJS`
+
+Сборка всей статики: `npm run buildGUI`
