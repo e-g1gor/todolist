@@ -29000,23 +29000,51 @@ async function syncLists() {
 
 
   return rezult;
+} // Write card changes to db
+
+
+async function updateCard(id, name) {
+  return fetch('/cards', {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: id,
+      name: name
+    })
+  });
 }
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      editedCard: null,
       date: new Date(),
       lists: {}
     };
   }
 
   componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 300);
+    this.timerID = setInterval(() => this.tick(), 100);
   }
 
   componentWillUnmount() {
     clearInterval(this.timerID);
+  }
+
+  editCard(e, list, card) {
+    if (this.state.editedCard === null) return; // Save or discard
+
+    let cardInput = document.querySelectorAll(`.card[data-key="${card}"]`)[0];
+    let name = cardInput.innerText;
+    if (e.key === "Escape") cardInput.innerText = this.state.lists[list].cards[card].name;
+    if (e.which === 13) updateCard(card, name);
+    if (e.which === 13 || e.key === "Escape") this.setState({
+      editedCard: null
+    });
   } // Sync dada
 
 
@@ -29035,19 +29063,31 @@ class Board extends React.Component {
       let _list;
 
       return [(_list = this.state.lists[listid], null), /*#__PURE__*/React.createElement("div", {
+        "data-key": listid,
+        key: listid,
         className: "list unselect"
       }, /*#__PURE__*/React.createElement("h1", null, _list.name), Object.keys(_list.cards).map(cardid => {
-        let _card;
+        let _card, _isEdited;
 
-        return [(_card = _list.cards[cardid], null), /*#__PURE__*/React.createElement("div", {
+        return [(_card = _list.cards[cardid], _isEdited = this.state.editedCard === cardid, null), /*#__PURE__*/React.createElement("div", {
           "data-key": cardid,
-          className: "card"
-        }, /*#__PURE__*/React.createElement("p", null, _card.name))];
-      }))];
+          key: cardid,
+          contentEditable: _isEdited ? true : null,
+          suppressContentEditableWarning: true,
+          onKeyDown: e => this.editCard(e, listid, cardid),
+          onClick: () => this.setState({
+            editedCard: cardid
+          }),
+          className: "card " + (_isEdited ? "card-edited" : null)
+        }, _card.name)];
+      }), /*#__PURE__*/React.createElement("div", {
+        className: "card_add"
+      }, "ADD CARD"))];
     }));
   }
 
-} // ENTRY POINT
+} // ☒ 
+// ENTRY POINT
 
 
 window.onload = () => {

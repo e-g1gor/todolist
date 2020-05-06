@@ -20,10 +20,27 @@ async function syncLists() {
   return rezult
 }
 
+// Write card changes to db
+async function updateCard(id, name) {
+  return fetch('/cards',
+    {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: id, name: name })
+    })
+}
+
+
+
+
 class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      editedCard: null,
       date: new Date(),
       lists: {}
     };
@@ -32,7 +49,7 @@ class Board extends React.Component {
   componentDidMount() {
     this.timerID = setInterval(
       () => this.tick(),
-      300
+      100
     );
   }
 
@@ -40,6 +57,18 @@ class Board extends React.Component {
     clearInterval(this.timerID);
   }
 
+  editCard(e, list, card) {
+    if (this.state.editedCard === null) return
+    // Save or discard
+    let cardInput = document.querySelectorAll(`.card[data-key="${card}"]`)[0]
+    let name = cardInput.innerText
+    if (e.key === "Escape")
+      cardInput.innerText = this.state.lists[list].cards[card].name
+    if (e.which === 13) 
+      updateCard(card, name)
+    if (e.which === 13 || e.key === "Escape")
+      this.setState({ editedCard: null })
+  }
 
   // Sync dada
   async tick() {
@@ -55,17 +84,23 @@ class Board extends React.Component {
     p.white React example: #{this.state.date.toLocaleTimeString()}.
     each listid in Object.keys(this.state.lists)
       - let list = this.state.lists[listid]
-      .list.unselect
+      .list.unselect(data-key=listid key=listid)
         h1=list.name
         each cardid in Object.keys(list.cards)
-          - let card = list.cards[cardid]
-          .card(data-key=cardid)
-            p=card.name
+          - let card = list.cards[cardid], isEdited = (this.state.editedCard === cardid)
+          .card(data-key=cardid key=cardid
+            className=isEdited?"card-edited":null
+            contentEditable=isEdited?true:null
+            suppressContentEditableWarning=true
+            onKeyDown= (e) => this.editCard(e, listid, cardid)
+            onClick = () => this.setState({ editedCard: cardid })
+            )=card.name
+        .card_add ADD CARD
         `;
   }
 }
 
-// ☒
+// ☒ 
 
 // ENTRY POINT
 window.onload = () => {

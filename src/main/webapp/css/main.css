@@ -2,7 +2,7 @@ body {
   background-image: url("/img/back.jpg");
   background-position: cover;
 }
-#container {
+#board {
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
@@ -44,9 +44,11 @@ body {
   line-height: 2em;
 }
 .card {
+  outline: none;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  justify-content: center;
   margin: 10px 0;
   width: 270px;
   min-height: 70px;
@@ -63,4 +65,8 @@ body {
   top: -2px;
   left: -2px;
   box-shadow: 3.2px 3.2px rgba(0,0,0,0.4);
+}
+.card-edited {
+  user-select: auto;
+  border: #f00 1px solid;
 }
