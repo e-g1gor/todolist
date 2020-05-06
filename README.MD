@@ -7,6 +7,12 @@
 
 ![Скриншот](https://raw.githubusercontent.com/e-g1gor/todolist/master/scheme.png)
 
+
+Веб интерфейс сейчас:
+При щелчке мышью по краточке позволяет её переименовать. Нажатие `Enter` сохраняет в БД, нажатие `Escape` отменяет изменеия
+
+----
+
 База данных MySQL 8.0
 
 Создать модель можно c помощью SQL запросов из файла `src\main\resources\model\init scheme.sql`
