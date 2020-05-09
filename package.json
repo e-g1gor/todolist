@@ -12,6 +12,7 @@
     "@babel/core": "^7.9.6",
     "@babel/plugin-transform-react-jsx": "^7.9.4",
     "@babel/plugin-transform-typescript": "^7.9.6",
+    "@types/react": "^16.9.34",
     "babel-eslint": "^10.1.0",
     "babel-plugin-transform-jsx-classname-components": "^0.0.3",
     "babel-plugin-transform-react-pug": "^7.0.1",
@@ -24,7 +25,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildJSX": "npx --no-install babel src/websrc --out-dir src/websrc/tmp --extensions .jsx",
     "buildTSX": "npx --no-install babel src/websrc --out-dir src/websrc/tmp --extensions .tsx",
-    "buildJS":  "npm run buildJSX & npm run buildTSX & npx --no-install browserify src/websrc/tmp/app.js -o src/main/webapp/js/bundle.js",
+    "buildJS": "npm run buildJSX & npm run buildTSX & npx --no-install browserify src/websrc/tmp/app.js -o src/main/webapp/js/bundle.js",
     "buildCSS": "npx --no-install stylus src/websrc -o src/main/webapp/css",
     "buildJSP": "npx --no-install pug src/websrc -o src/main/webapp --extension jsp --pretty",
     "buildGUI": "npm run buildJS & npm run buildJSP & npm run buildCSS"
