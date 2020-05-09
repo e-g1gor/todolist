@@ -29028,27 +29028,6 @@ class Controller {
 
 }
 
-class Card extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return /*#__PURE__*/React.createElement("div", {
-      "data-key": this.props.key,
-      key: this.props.key,
-      contentEditable: isEdited ? true : null,
-      suppressContentEditableWarning: true,
-      onKeyDown: e => this.props.editCard(e, listid, cardid),
-      onClick: e => this.props.editCard(e, listid, cardid),
-      className: "card " + (this.props.isEdited ? "card-edited" : null)
-    }, this.props.name, /*#__PURE__*/React.createElement("div", {
-      className: "card_del"
-    }, "X"));
-  }
-
-}
-
 class Board extends React.Component {
   constructor(props) {
     super(props);
@@ -29068,7 +29047,7 @@ class Board extends React.Component {
   }
 
   editCard(e, list, card) {
-    if (this.state.editedCard === null) {
+    if (this.state.editedCard !== card) {
       this.setState({
         editedCard: card
       });
@@ -29076,7 +29055,8 @@ class Board extends React.Component {
     } // Save or discard
 
 
-    let cardInput = document.querySelectorAll(`.card[data-key="${card}"]`)[0];
+    let cardInput = document.querySelectorAll(`.card[data-key="${card}"]>.card_text`)[0]; // alert
+
     let name = cardInput.innerText;
     if (e.key === "Escape") cardInput.innerText = this.state.lists[list].cards[card].name;
     if (e.which === 13) Controller.updateCard({
@@ -29094,6 +29074,7 @@ class Board extends React.Component {
   }
 
   deleteCard(e, list, card) {
+    e.stopPropagation();
     e.preventDefault();
   } // Sync dada
 
@@ -29122,15 +29103,17 @@ class Board extends React.Component {
         return [(_card = _list.cards[cardid], _isEdited = this.state.editedCard === cardid, null), /*#__PURE__*/React.createElement("div", {
           "data-key": cardid,
           key: cardid,
-          contentEditable: _isEdited ? true : null,
-          suppressContentEditableWarning: true,
           onKeyDown: e => this.editCard(e, listid, cardid),
           onClick: e => this.editCard(e, listid, cardid),
           className: "card " + (_isEdited ? "card-edited" : null)
+        }, /*#__PURE__*/React.createElement("div", {
+          contentEditable: _isEdited ? true : null,
+          suppressContentEditableWarning: true,
+          className: "card_text"
         }, _card.name), /*#__PURE__*/React.createElement("div", {
           onClick: e => this.deleteCard(e, listid, cardid),
-          className: "card_del"
-        }, "X")];
+          className: "card_del " + (_isEdited ? "card_del-edited" : null)
+        }, "X"))];
       }), /*#__PURE__*/React.createElement("div", {
         className: "list_addcard"
       }, /*#__PURE__*/React.createElement("textarea", {

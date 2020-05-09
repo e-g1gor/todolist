@@ -52,22 +52,25 @@ body
     line-height 2em
 
 .card
-  outline none
-  display flex
-  flex-flow column nowrap
-  align-items center
-  justify-content center
   margin 10px 0
-  width 270px
-  padding 35px
   background-color #fff
   materialHover()
+
+  &_text
+    outline none
+    display flex
+    flex-flow column nowrap
+    align-items center
+    justify-content center
+    width 270px
+    padding 35px
 
   &-edited
     user-select auto
     border red 1px solid
 
   &_del
+    z-index 200
     text-align center
     position absolute
     right 5px
@@ -78,6 +81,10 @@ body
     width 1em
     font-size 20px
     line-height 1em
+
+    &-edited
+      display none
+
     &:hover
       color red
       border-color red

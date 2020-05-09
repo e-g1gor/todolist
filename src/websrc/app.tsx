@@ -52,28 +52,6 @@ class Controller {
 }
 
 
-class Card extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return pug`
-      .card(data-key=this.props.key key=this.props.key
-        className=this.props.isEdited?"card-edited":null
-        contentEditable=isEdited?true:null
-        suppressContentEditableWarning=true
-        onKeyDown= (e) => this.props.editCard(e, listid, cardid)
-        onClick = (e) => this.props.editCard(e, listid, cardid)
-        )=this.props.name
-        .card_del X
-      `
-  }
-
-}
-
-
 
 class Board extends React.Component {
   constructor(props) {
@@ -97,12 +75,13 @@ class Board extends React.Component {
   }
 
   editCard(e:KeyboardEvent, list, card) {
-    if (this.state.editedCard === null) {
+    if (this.state.editedCard !== card) {
       this.setState({ editedCard: card })
       return
     }
     // Save or discard
-    let cardInput = document.querySelectorAll(`.card[data-key="${card}"]`)[0] as HTMLElement
+    let cardInput = document.querySelectorAll(`.card[data-key="${card}"]>.card_text`)[0] as HTMLElement
+    // alert
     let name = cardInput.innerText
     if (e.key === "Escape")
       cardInput.innerText = this.state.lists[list].cards[card].name
@@ -118,6 +97,7 @@ class Board extends React.Component {
   }
 
   deleteCard(e:KeyboardEvent, list, card) {
+    e.stopPropagation()
     e.preventDefault()
   }
 
@@ -139,14 +119,16 @@ class Board extends React.Component {
         h1=list.name
         each cardid in Object.keys(list.cards)
           - let card = list.cards[cardid], isEdited = (this.state.editedCard === cardid);
-          .card(data-key=cardid key=cardid
-            className=isEdited?"card-edited":null
-            contentEditable=isEdited?true:null
-            suppressContentEditableWarning=true
-            onKeyDown= (e) => this.editCard(e, listid, cardid)
-            onClick = (e) => this.editCard(e, listid, cardid)
-            )=card.name
-          .card_del(onClick = (e) => this.deleteCard(e, listid, cardid)) X
+          .card(data-key=cardid key=cardid className=isEdited?"card-edited":null
+              onKeyDown= (e) => this.editCard(e, listid, cardid)
+              onClick = (e) => this.editCard(e, listid, cardid)
+              )
+            .card_text(contentEditable=isEdited?true:null
+              suppressContentEditableWarning=true
+              )=card.name
+            .card_del(
+              className=isEdited?"card_del-edited":null
+              onClick = (e) => this.deleteCard(e, listid, cardid)) X
         .list_addcard
           textarea(placeholder="new card name")
           div ADD CARD

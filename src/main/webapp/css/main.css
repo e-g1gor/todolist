@@ -47,14 +47,7 @@ body {
   line-height: 2em;
 }
 .card {
-  outline: none;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
   margin: 10px 0;
-  width: 270px;
-  padding: 35px;
   background-color: #fff;
   position: relative;
   top: 0;
@@ -69,11 +62,21 @@ body {
   left: -2px;
   box-shadow: 3.2px 3.2px rgba(0,0,0,0.4);
 }
+.card_text {
+  outline: none;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  width: 270px;
+  padding: 35px;
+}
 .card-edited {
   user-select: auto;
   border: #f00 1px solid;
 }
 .card_del {
+  z-index: 200;
   text-align: center;
   position: absolute;
   right: 5px;
@@ -84,6 +87,9 @@ body {
   width: 1em;
   font-size: 20px;
   line-height: 1em;
+}
+.card_del-edited {
+  display: none;
 }
 .card_del:hover {
   color: #f00;
