@@ -46,7 +46,17 @@ public class CardService {
         cardRepository.save(newCard);
     }
 
-	public void deleteCard(Long id) {
+    public void deleteCard(Long id) {
+        // TODO: find all cards in list, detect all
+        Card target = cardRepository.findById(id).get();
+        Long list = target.getList();
+        Long order = target.getOrder();
+        Iterable<Card> cards = cardRepository.findByListOrderByOrderAsc(list);
         cardRepository.deleteById(id);
-	}
+        for (Card card : cards)
+            if (order < card.getOrder()) {
+                card.setOrder(card.getOrder() - 1);
+                cardRepository.save(card);
+            }
+    }
 }
