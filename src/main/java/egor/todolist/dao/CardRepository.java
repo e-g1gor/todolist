@@ -14,5 +14,5 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
   Optional<Card> findByName(String name);
 
-  Iterable<Card> findByListIdOrderByOrderAsc(Long list);
+  Iterable<Card> findByListOrderByOrderAsc(Long list);
 }

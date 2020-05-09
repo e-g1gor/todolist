@@ -26,7 +26,7 @@ public class ListService {
     }
 
     public Iterable<Card> getListCards(Long id) {
-        return cardRepository.findByListIdOrderByOrderAsc(id);
+        return cardRepository.findByListOrderByOrderAsc(id);
     }
 
     public Optional<CardList> findByName(String name) {

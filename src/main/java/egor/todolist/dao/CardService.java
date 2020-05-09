@@ -30,14 +30,23 @@ public class CardService {
     }
 
     public Iterable<Card> findByList(Long list) {
-        Iterable<Card> card = cardRepository.findByListIdOrderByOrderAsc(list);
+        Iterable<Card> card = cardRepository.findByListOrderByOrderAsc(list);
         return card;
     }
 
-	public void updateCard(Card card) {        
-    log.info("id = " + card.getId() +  "; name = " + card.getName());
-    Card newCard = cardRepository.findById(card.getId()).get();
-    newCard.setName(card.getName());
-    cardRepository.save(newCard);
+    public void updateCard(Card card) {
+        log.info("id = " + card.getId() + "; name = " + card.getName());
+        Card newCard = cardRepository.findById(card.getId()).get();
+        newCard.setName(card.getName());
+        cardRepository.save(newCard);
+    }
+
+    public void addCard(Card newCard) {
+        log.info("id = " + newCard.getId() + "; name = " + newCard.getName());
+        cardRepository.save(newCard);
+    }
+
+	public void deleteCard(Long id) {
+        cardRepository.deleteById(id);
 	}
 }

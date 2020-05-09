@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,10 +61,15 @@ public class CardController {
     return ResponseEntity.ok(HttpStatus.OK);
   }
 
-  @PostMapping
+  @PostMapping("/cards")
   public ResponseEntity addCard(@RequestBody Card newCard) {
-    // cardService.addCard(newCard);
+    cardService.addCard(newCard);
     return ResponseEntity.ok(HttpStatus.OK);
   }
   
+  @DeleteMapping("/cards")
+  public ResponseEntity deleteCard(@RequestParam(value = "id", required = true)  Long id) {
+    cardService.deleteCard(id);
+    return ResponseEntity.ok(HttpStatus.OK);
+  }
 }

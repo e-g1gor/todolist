@@ -23,21 +23,7 @@ public class Card {
   private Long id;
   private String name;
   private String description;
-  @Column(name = "order_in_list")
+  @Column(name = "`order`")
   private Long order;
-
-
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "list", referencedColumnName = "idlist")
-  private CardList list;
-
-  public Card() {
-
-  }
-
-  public Card(String name, String description, Long order) {
-    this.name = name;
-    this.description = description;
-    this.order = order;
-  }
+  private Long list;
 }
