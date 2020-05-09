@@ -38,17 +38,21 @@ class Controller {
       })
   }
 
-  // static async  addCard(card: {name: string }) {
-  //   return fetch('/cards',
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(card)
-  //     })
-  // }
+  static async addCard(card: { name: string, list: Number, order: Number }) {
+    return fetch('/cards',
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(card)
+      })
+  }
+
+  static async deleteCard(id) {
+    return fetch('/cards?id='+id, {method: 'DELETE'})
+  }
 }
 
 
@@ -74,7 +78,7 @@ class Board extends React.Component {
     clearInterval(this.timerID);
   }
 
-  editCard(e:KeyboardEvent, list, card) {
+  editCard(e: KeyboardEvent, list, card) {
     if (this.state.editedCard !== card) {
       this.setState({ editedCard: card })
       return
@@ -91,14 +95,17 @@ class Board extends React.Component {
       this.setState({ editedCard: null })
   }
 
-  addCard(e:KeyboardEvent) {
+  addCard(e: KeyboardEvent, list, order) {
     e.preventDefault()
-    console.log("TODO: add card request")
+    let name = (document.querySelectorAll(`.list[data-key="${list}"] > form > input[type="text"]`)[0] as HTMLInputElement).value
+    Controller.addCard({name, list, order})
   }
 
-  deleteCard(e:KeyboardEvent, list, card) {
+  deleteCard(e: KeyboardEvent, card) {
     e.stopPropagation()
     e.preventDefault()
+    console.log("TODO: del card request")
+    Controller.deleteCard(card)
   }
 
   // Sync dada
@@ -128,10 +135,10 @@ class Board extends React.Component {
               )=card.name
             .card_del(
               className=isEdited?"card_del-edited":null
-              onClick = (e) => this.deleteCard(e, listid, cardid)) X
-        .list_addcard
-          textarea(placeholder="new card name")
-          div ADD CARD
+              onClick = (e) => this.deleteCard(e, cardid)) X
+        form.list_addcard
+          input(type="text" placeholder="new card name")
+          input(type="button" value="ADD CARD" onClick = (e) => this.addCard(e, listid, Object.keys(list.cards).length))
         `;
   }
 }

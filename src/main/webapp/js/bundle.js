@@ -29013,18 +29013,24 @@ class Controller {
       },
       body: JSON.stringify(card)
     });
-  } // static async  addCard(card: {name: string }) {
-  //   return fetch('/cards',
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(card)
-  //     })
-  // }
+  }
 
+  static async addCard(card) {
+    return fetch('/cards', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(card)
+    });
+  }
+
+  static async deleteCard(id) {
+    return fetch('/cards?id=' + id, {
+      method: 'DELETE'
+    });
+  }
 
 }
 
@@ -29068,14 +29074,21 @@ class Board extends React.Component {
     });
   }
 
-  addCard(e) {
+  addCard(e, list, order) {
     e.preventDefault();
-    console.log("TODO: add card request");
+    let name = document.querySelectorAll(`.list[data-key="${list}"] > form > input[type="text"]`)[0].value;
+    Controller.addCard({
+      name,
+      list,
+      order
+    });
   }
 
-  deleteCard(e, list, card) {
+  deleteCard(e, card) {
     e.stopPropagation();
     e.preventDefault();
+    console.log("TODO: del card request");
+    Controller.deleteCard(card);
   } // Sync dada
 
 
@@ -29111,14 +29124,19 @@ class Board extends React.Component {
           suppressContentEditableWarning: true,
           className: "card_text"
         }, _card.name), /*#__PURE__*/React.createElement("div", {
-          onClick: e => this.deleteCard(e, listid, cardid),
+          onClick: e => this.deleteCard(e, cardid),
           className: "card_del " + (_isEdited ? "card_del-edited" : null)
         }, "X"))];
-      }), /*#__PURE__*/React.createElement("div", {
+      }), /*#__PURE__*/React.createElement("form", {
         className: "list_addcard"
-      }, /*#__PURE__*/React.createElement("textarea", {
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "text",
         placeholder: "new card name"
-      }), /*#__PURE__*/React.createElement("div", null, "ADD CARD")))];
+      }), /*#__PURE__*/React.createElement("input", {
+        type: "button",
+        value: "ADD CARD",
+        onClick: e => this.addCard(e, listid, Object.keys(_list.cards).length)
+      })))];
     }));
   }
 

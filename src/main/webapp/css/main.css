@@ -46,6 +46,9 @@ body {
   height: 2em;
   line-height: 2em;
 }
+.list_addcard {
+  margin: 20px 0;
+}
 .card {
   margin: 10px 0;
   background-color: #fff;
