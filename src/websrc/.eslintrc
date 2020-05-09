@@ -1,0 +1,62 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 10,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react-pug"
+  ],
+  "extends": ["eslint:recommended", "plugin:react-pug/all", "plugin:react/recommended"],
+
+  "rules": {
+    "semi": [2, "never"],
+    "no-extra-semi": 1,
+    "no-inner-declarations": 2,
+    "no-undef": 2,
+    "no-unused-vars": "warn",
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "react-pug/empty-lines": 0
+  },
+
+  "overrides": [{
+
+    "files": ["**/*.ts?(x)"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "react-pug"],
+    "extends": ["plugin:@typescript-eslint/recommended", "plugin:react-pug/all"],
+
+    "rules": {
+      "@typescript-eslint/type-annotation-spacing": 0,
+      "@typescript-eslint/member-delimiter-style": ["error", {
+        "multiline": {
+          "delimiter": "none", // 'none' or 'semi' or 'comma'
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi", // 'semi' or 'comma'
+          "requireLast": false
+        }
+      }],
+      "semi": [2, "never"],
+      "no-extra-semi": 1,
+      "no-inner-declarations": 2,
+      "no-undef": 2,
+      "no-unused-vars": "warn",
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "react-pug/empty-lines": 0
+    }
+  }]
+
+}
