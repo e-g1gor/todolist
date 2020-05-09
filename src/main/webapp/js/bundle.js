@@ -28975,7 +28975,7 @@ if (process.env.NODE_ENV === 'production') {
 
 }).call(this,require('_process'))
 },{"./cjs/scheduler-tracing.development.js":11,"./cjs/scheduler-tracing.production.min.js":12,"_process":2}],17:[function(require,module,exports){
-'use strict';
+'use strict'; // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 let React = require('react');
 
@@ -29003,18 +29003,50 @@ async function syncLists() {
 } // Write card changes to db
 
 
-async function updateCard(id, name) {
-  return fetch('/cards', {
-    method: 'PUT',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      id: id,
-      name: name
-    })
-  });
+class Controller {
+  static async updateCard(card) {
+    return fetch('/cards', {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(card)
+    });
+  } // static async  addCard(card: {name: string }) {
+  //   return fetch('/cards',
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(card)
+  //     })
+  // }
+
+
+}
+
+class Card extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return /*#__PURE__*/React.createElement("div", {
+      "data-key": this.props.key,
+      key: this.props.key,
+      contentEditable: isEdited ? true : null,
+      suppressContentEditableWarning: true,
+      onKeyDown: e => this.props.editCard(e, listid, cardid),
+      onClick: e => this.props.editCard(e, listid, cardid),
+      className: "card " + (this.props.isEdited ? "card-edited" : null)
+    }, this.props.name, /*#__PURE__*/React.createElement("div", {
+      className: "card_del"
+    }, "X"));
+  }
+
 }
 
 class Board extends React.Component {
@@ -29036,15 +29068,33 @@ class Board extends React.Component {
   }
 
   editCard(e, list, card) {
-    if (this.state.editedCard === null) return; // Save or discard
+    if (this.state.editedCard === null) {
+      this.setState({
+        editedCard: card
+      });
+      return;
+    } // Save or discard
+
 
     let cardInput = document.querySelectorAll(`.card[data-key="${card}"]`)[0];
     let name = cardInput.innerText;
     if (e.key === "Escape") cardInput.innerText = this.state.lists[list].cards[card].name;
-    if (e.which === 13) updateCard(card, name);
+    if (e.which === 13) Controller.updateCard({
+      id: card,
+      name: name
+    });
     if (e.which === 13 || e.key === "Escape") this.setState({
       editedCard: null
     });
+  }
+
+  addCard(e) {
+    e.preventDefault();
+    console.log("TODO: add card request");
+  }
+
+  deleteCard(e, list, card) {
+    e.preventDefault();
   } // Sync dada
 
 
@@ -29075,14 +29125,17 @@ class Board extends React.Component {
           contentEditable: _isEdited ? true : null,
           suppressContentEditableWarning: true,
           onKeyDown: e => this.editCard(e, listid, cardid),
-          onClick: () => this.setState({
-            editedCard: cardid
-          }),
+          onClick: e => this.editCard(e, listid, cardid),
           className: "card " + (_isEdited ? "card-edited" : null)
-        }, _card.name)];
+        }, _card.name), /*#__PURE__*/React.createElement("div", {
+          onClick: e => this.deleteCard(e, listid, cardid),
+          className: "card_del"
+        }, "X")];
       }), /*#__PURE__*/React.createElement("div", {
-        className: "card_add"
-      }, "ADD CARD"))];
+        className: "list_addcard"
+      }, /*#__PURE__*/React.createElement("textarea", {
+        placeholder: "new card name"
+      }), /*#__PURE__*/React.createElement("div", null, "ADD CARD")))];
     }));
   }
 

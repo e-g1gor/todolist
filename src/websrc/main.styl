@@ -9,11 +9,13 @@ materialHover()
   transition-duration 0.1s
   box-shadow hoverShift * 0.4 hoverShift * 0.4 rgba(0, 0, 0, 0.4)
 
-  // transition margin 0.5s
   &:hover
     top -(hoverShift * 0.5)
     left -(hoverShift * 0.5)
     box-shadow hoverShift * 0.8 hoverShift * 0.8 rgba(0, 0, 0, 0.4)
+
+*
+  box-sizing border-box
 
 body
   background-image url('/img/back.jpg')
@@ -57,10 +59,25 @@ body
   justify-content center
   margin 10px 0
   width 270px
-  min-height 70px
+  padding 35px
   background-color #fff
   materialHover()
 
   &-edited
     user-select auto
     border red 1px solid
+
+  &_del
+    text-align center
+    position absolute
+    right 5px
+    top 5px
+    border-radius 5px
+    border 1px solid
+    height 1em
+    width 1em
+    font-size 20px
+    line-height 1em
+    &:hover
+      color red
+      border-color red
