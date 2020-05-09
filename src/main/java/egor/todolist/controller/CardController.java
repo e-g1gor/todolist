@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,9 +54,15 @@ public class CardController {
   }
   
   // await fetch('/cards', {method: 'POST', headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify({name: 'Textual content'})})    
-  @PutMapping("/cards")
-  public ResponseEntity newCard(@RequestBody Card newCard) {
-    cardService.updateCard(newCard);
+  @PatchMapping("/cards")
+  public ResponseEntity newCard(@RequestBody Card patchCard) {
+    cardService.updateCard(patchCard);
+    return ResponseEntity.ok(HttpStatus.OK);
+  }
+
+  @PostMapping
+  public ResponseEntity addCard(@RequestBody Card newCard) {
+    // cardService.addCard(newCard);
     return ResponseEntity.ok(HttpStatus.OK);
   }
   
