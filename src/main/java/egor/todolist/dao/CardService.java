@@ -47,7 +47,6 @@ public class CardService {
     }
 
     public void deleteCard(Long id) {
-        // TODO: find all cards in list, detect all
         Card target = cardRepository.findById(id).get();
         Long list = target.getList();
         Long order = target.getOrder();

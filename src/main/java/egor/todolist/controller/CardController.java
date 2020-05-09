@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +17,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import egor.todolist.dao.CardService;
 import egor.todolist.model.Card;
-import lombok.extern.java.Log;
 
 @RestController
-@Log
 public class CardController {
 
   @Autowired
