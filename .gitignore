@@ -7,7 +7,7 @@ target/
 ### custom ###
 *.mwb.bak
 node_modules
-
+src/websrc/tmp
 
 ### STS ###
 .apt_generated
