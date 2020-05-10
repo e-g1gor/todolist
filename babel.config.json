@@ -1,8 +1,9 @@
-{
+{ 
   "plugins": [
     "@babel/plugin-transform-typescript",
     "babel-plugin-transform-react-pug",
     "babel-plugin-transform-jsx-classname-components",
-    "@babel/plugin-transform-react-jsx"
+    "@babel/plugin-transform-react-jsx",
+    "@babel/plugin-transform-modules-commonjs"
   ]
 }
