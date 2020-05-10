@@ -19,7 +19,7 @@ import egor.todolist.dao.CardService;
 import egor.todolist.model.Card;
 
 @RestController
-public class CardController {
+public class CardRestController {
 
   @Autowired
   CardService cardService;

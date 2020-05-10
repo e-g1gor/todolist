@@ -1,5 +1,6 @@
 package egor.todolist.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class CardService {
     @Autowired
     private CardRepository cardRepository;
 
-    public Iterable<Card> findAll() {
+    public List<Card> findAll() {
         return cardRepository.findAll();
     }
 
@@ -29,8 +30,8 @@ public class CardService {
         return card;
     }
 
-    public Iterable<Card> findByList(Long list) {
-        Iterable<Card> card = cardRepository.findByListOrderByOrderAsc(list);
+    public List<Card> findByList(Long list) {
+        List<Card> card = cardRepository.findByListOrderByOrderAsc(list);
         return card;
     }
 
@@ -50,7 +51,7 @@ public class CardService {
         Card target = cardRepository.findById(id).get();
         Long list = target.getList();
         Long order = target.getOrder();
-        Iterable<Card> cards = cardRepository.findByListOrderByOrderAsc(list);
+        List<Card> cards = cardRepository.findByListOrderByOrderAsc(list);
         cardRepository.deleteById(id);
         for (Card card : cards)
             if (order < card.getOrder()) {
