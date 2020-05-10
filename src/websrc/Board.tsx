@@ -100,7 +100,7 @@ export default class Board extends React.Component<Props, State> {
                 )=card.name
               .card_del(
                 className=isEdited?"card_del-edited":null
-                onClick = (e) => this.deleteCard(e, cardid)) Z
+                onClick = (e) => this.deleteCard(e, cardid)) R
           form.list_addcard(method="POST" action="/cards" onSubmit = (e) => this.addCard(e, listid, Object.keys(list.cards).length) )
             input(name="name" type="text" placeholder="new card" autocomplete="off" onSubmit= e => e.target.value='')
             input(name="list" value=listid type="hidden")
