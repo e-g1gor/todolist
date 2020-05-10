@@ -1,42 +1,32 @@
-| <%@ page language="java" pageEncoding="UTF-8"%>
-| <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.util.Random" %>
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="egor.todolist.model.Card" %>
+<%@ page import="egor.todolist.model.CardList" %>
+<% Iterable<CardList> lists = (Iterable<CardList>)request.getAttribute("lists");%>
 
 doctype html
 html
   head
     meta(charset='UTF-8')
-    //- script(src='/js/bundle.js')
+    script(src='/js/bundle.js')
     title This page is generated from JSP template!
     link(href='/css/main.css', rel='stylesheet')
   body
     #board
-
-      //-     each cardid in Object.keys(list.cards)
-      //-       - let card = list.cards[cardid], isEdited = (this.state.editedCard === cardid);
-      //-       .card(data-key=cardid key=cardid className=isEdited?"card-edited":null
-      //-           onKeyDown= (e) => this.editCard(e, listid, cardid)
-      //-           onClick = (e) => this.editCard(e, listid, cardid)
-      //-           )
-      //-         .card_text(contentEditable=isEdited?true:null
-      //-           suppressContentEditableWarning=true
-      //-           )=card.name
-      //-         .card_del(
-      //-           className=isEdited?"card_del-edited":null
-      //-           onClick = (e) => this.deleteCard(e, cardid)) X
-      //-     form.list_addcard(method="POST" action="/cards" onSubmit = (e) => this.addCard(e, listid, Object.keys(list.cards).length) )
-      //-       input(name="name" type="text" placeholder="new card" autocomplete="off" onSubmit= e => e.target.value='')
-      //-       input(name="list" value=listid type="hidden")
-      //-       input(type="submit" value="ADD CARD")
-
-      | <% Random rnd = new Random(); %>
-      | <% for (int listid=1; listid<4; listid++) { %>
-      .list.unselect(data-key="<%= listid %>" key="<%= listid %>")
-        h1 Here be name of <%= listid %> list
-        | <% for (int cardid=1; cardid<rnd.nextInt(6) + 1; cardid++) { %>
-        .card(data-key="<%= cardid %>" key="<%= cardid %>")
-          .card_text Here be name of <%= cardid %> card
-          .card_del X
-        | <% } %>
-      | <% } %>
+      <% for (CardList list : lists) { %>
+      .list.unselect(data-key!="<%= list.getId() %>" key!="<%= list.getId() %>")
+        h1 <%= list.getName() %>
+        <% for (Card card : list.getCards()) { %>
+        .card(data-key!="<%= card.getId() %>" key!="<%= card.getId() %>")
+          .card_text <%= card.getName() %>
+          .card_del(
+            className=isEdited?"card_del-edited":null
+            onClick = (e) => Controller.deleteCard("<%= card.getId() %>")) X X
+        <% } %>
+        form.list_addcard(method="POST" action="/cards" onSubmit= e => e.preventDefault() )
+          input(name="name" type="text" placeholder="new card" autocomplete="off" onSubmit= e => e.target.value='')
+          input(name="list" value!="<%= list.getId() %>" type="hidden")
+          input(name="order" value!="<%= list.getCards().size() %>" type="hidden")
+          input(type="submit" value="ADD CARD")
+      <% } %>
 
