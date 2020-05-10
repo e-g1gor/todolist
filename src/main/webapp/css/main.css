@@ -2,10 +2,13 @@
   box-sizing: border-box;
 }
 body {
+  padding: 0;
+  margin: 0;
   background-image: url("/img/back.jpg");
   background-position: cover;
 }
 #board {
+  margin: 5px;
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
@@ -77,6 +80,25 @@ body {
 .card-edited {
   user-select: auto;
   border: #f00 1px solid;
+}
+.card_editor {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,0.7);
+}
+.card_editor >form {
+  padding: 35px;
+  border-radius: 10px;
+  background-color: #ddd;
+}
+.card_editor-hidden {
+  display: none;
 }
 .card_del {
   right: 5px;
