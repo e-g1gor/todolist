@@ -36,14 +36,14 @@ public class CardService {
     }
 
     public void updateCard(Card card) {
-        log.info("id = " + card.getId() + "; name = " + card.getName());
+        log.info(card.toString());
         Card newCard = cardRepository.findById(card.getId()).get();
         newCard.setName(card.getName());
         cardRepository.save(newCard);
     }
 
     public void addCard(Card newCard) {
-        log.info("id = " + newCard.getId() + "; name = " + newCard.getName());
+        log.info(newCard.toString());
         cardRepository.save(newCard);
     }
 

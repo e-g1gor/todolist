@@ -19,7 +19,7 @@ import egor.todolist.dao.CardService;
 import egor.todolist.model.Card;
 
 @RestController
-public class CardRestController {
+public class CardController {
 
   @Autowired
   CardService cardService;
@@ -60,13 +60,6 @@ public class CardRestController {
 
   @PostMapping("/cards")
   public ResponseEntity addCard(@RequestBody Card newCard) {
-    cardService.addCard(newCard);
-    return ResponseEntity.ok(HttpStatus.OK);
-  }
-
-  
-@PostMapping(path = "/cards", consumes = "application/x-www-form-urlencoded")
-  public ResponseEntity addCardForm(Card newCard) {
     cardService.addCard(newCard);
     return ResponseEntity.ok(HttpStatus.OK);
   }

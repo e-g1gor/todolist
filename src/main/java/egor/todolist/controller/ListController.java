@@ -14,7 +14,7 @@ import egor.todolist.dao.ListService;
 import egor.todolist.model.CardList;
 
 @RestController
-public class ListRestController {
+public class ListController {
 
   @Autowired
   ListService listService;
