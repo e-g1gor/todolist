@@ -63,6 +63,13 @@ public class CardController {
     cardService.addCard(newCard);
     return ResponseEntity.ok(HttpStatus.OK);
   }
+
+  
+@PostMapping(path = "/cards", consumes = "application/x-www-form-urlencoded")
+  public ResponseEntity addCardForm(Card newCard) {
+    cardService.addCard(newCard);
+    return ResponseEntity.ok(HttpStatus.OK);
+  }
   
   @DeleteMapping("/cards")
   public ResponseEntity deleteCard(@RequestParam(value = "id", required = true)  Long id) {
