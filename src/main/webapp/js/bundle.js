@@ -28979,31 +28979,31 @@ if (process.env.NODE_ENV === 'production') {
 
 let React = require('react');
 
-let ReactDOM = require('react-dom');
-
-async function syncLists() {
-  let rezult = {};
-  let cards;
-  let lists = await (await fetch("/lists")).json(); // Load data
-
-  for (let list of lists) {
-    rezult[list.id] = {
-      name: list.name,
-      cards: {}
-    };
-    cards = await (await fetch("/cards?list=" + list.id)).json();
-
-    for (let card of cards) rezult[list.id].cards[card.id] = {
-      name: card.name
-    };
-  } // Return
-
-
-  return rezult;
-} // Write card changes to db
+let ReactDOM = require('react-dom'); // Write card changes to db
 
 
 class Controller {
+  static async syncLists() {
+    let rezult = {};
+    let cards;
+    let lists = await (await fetch("/lists")).json(); // Load data
+
+    for (let list of lists) {
+      rezult[list.id] = {
+        name: list.name,
+        cards: {}
+      };
+      cards = await (await fetch("/cards?list=" + list.id)).json();
+
+      for (let card of cards) rezult[list.id].cards[card.id] = {
+        name: card.name
+      };
+    } // Return
+
+
+    return rezult;
+  }
+
   static async updateCard(card) {
     return fetch('/cards', {
       method: 'PATCH',
@@ -29061,7 +29061,7 @@ class Board extends React.Component {
     } // Save or discard
 
 
-    let cardInput = document.querySelectorAll(`.card[data-key="${card}"]>.card_text`)[0]; // alert
+    let cardInput = document.querySelector(`.card[data-key="${card}"]>.card_text`); // alert
 
     let name = cardInput.innerText;
     if (e.key === "Escape") cardInput.innerText = this.state.lists[list].cards[card].name;
@@ -29076,12 +29076,13 @@ class Board extends React.Component {
 
   addCard(e, list, order) {
     e.preventDefault();
-    let name = document.querySelectorAll(`.list[data-key="${list}"] > form > input[type="text"]`)[0].value;
+    let text = document.querySelector(`.list[data-key="${list}"] > form > input[type="text"]`);
     Controller.addCard({
-      name,
+      name: text.value,
       list,
       order
     });
+    text.value = "";
   }
 
   deleteCard(e, card) {
@@ -29093,7 +29094,7 @@ class Board extends React.Component {
 
 
   async tick() {
-    let lists = await syncLists();
+    let lists = await Controller.syncLists();
     this.setState({
       date: new Date(),
       lists: lists
@@ -29128,16 +29129,25 @@ class Board extends React.Component {
           className: "card_del " + (_isEdited ? "card_del-edited" : null)
         }, "X"))];
       }), /*#__PURE__*/React.createElement("form", {
+        method: "POST",
+        action: "/cards",
+        onSubmit: e => this.addCard(e, listid, Object.keys(_list.cards).length),
         className: "list_addcard"
       }, /*#__PURE__*/React.createElement("input", {
+        name: "name",
         type: "text",
-        placeholder: "new card name"
+        placeholder: "new card",
+        autocomplete: "off",
+        onSubmit: e => e.target.value = ''
       }), /*#__PURE__*/React.createElement("input", {
-        type: "button",
-        value: "ADD CARD",
-        onClick: e => this.addCard(e, listid, Object.keys(_list.cards).length)
+        name: "list",
+        value: listid,
+        type: "hidden"
+      }), /*#__PURE__*/React.createElement("input", {
+        type: "submit",
+        value: "ADD CARD"
       })))];
-    }));
+    }), /*#__PURE__*/React.createElement("p", null, "next"));
   }
 
 } // ☒ 
