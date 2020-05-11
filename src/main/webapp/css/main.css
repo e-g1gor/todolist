@@ -120,6 +120,21 @@ body {
   right: 5px;
   top: 5px;
 }
+.card_del-div {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border: 1px solid;
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+}
+.card_del-div:hover {
+  color: #f00;
+  border-color: #f00;
+}
 .card_del >button[type='submit'] {
   background-color: transparent;
   display: flex;
@@ -138,4 +153,10 @@ body {
 }
 .card_del-edited {
   display: none;
+}
+.heartbeat {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: #fff;
 }

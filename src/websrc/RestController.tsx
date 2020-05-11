@@ -19,7 +19,7 @@ export default class Controller {
     return rezult
   }
 
-  static async  updateCard(card: { id: Number; name: string }) {
+  static async updateCard(card: { id: Number; name: string }) {
     return fetch('/cards',
       {
         method: 'PATCH',

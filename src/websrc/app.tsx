@@ -1,18 +1,17 @@
 'use strict'
 
-import Controller from './Controller'
-declare global {
-  const CardEditor: {div:HTMLDivElement, form: HTMLFormElement}
-  interface Window {
-    Controller: Controller
-    CardEditor:  {div:HTMLDivElement, form: HTMLFormElement}
-  }
-}
-window.Controller=Controller
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const pug: any
+import ReactDOM from 'react-dom'
+import React from 'react'
+import Board from './Board'
+
 
 // ENTRY POINT
 window.onload = () => {
   document.title = "JS is modifying this page"
-  window.CardEditor = {
-    div: document.querySelector(".card_editor"), form: document.querySelector(".card_editor>form")}
+  ReactDOM.render(
+    <Board></Board>,
+    document.getElementById('board')
+  )
 }

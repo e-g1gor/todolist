@@ -6,6 +6,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <script src="${nojs ? '' : '/js/bundle.js' }"></script>
     <title>This page is generated from JSP template!</title>
     <link href="/css/main.css" rel="stylesheet">
   </head>
