@@ -16,7 +16,6 @@
         <input name="name" value="${name}" type="text" placeholder="enter card name" autocomplete="off" onSubmit="undefined">
         <input name="list" value="${list}" type="hidden">
         <input name="id" value="${id}" type="hidden">
-        <input name="order" value="${order}" type="hidden">
         <input type="submit" value="SAVE CARD">
       </form><a class="card_closeEditor" href="/"></a>
     </div>
