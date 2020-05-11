@@ -8,7 +8,7 @@ body {
   background-position: cover;
 }
 #board {
-  margin: 5px;
+  padding: 5px;
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
@@ -96,8 +96,8 @@ body {
   justify-content: center;
   z-index: 100;
   position: absolute;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   background-color: rgba(0,0,0,0.7);
 }
 .card_editor >form {
