@@ -6,28 +6,28 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <script src="/js/bundle.js"></script>
     <title>This page is generated from JSP template!</title>
     <link href="/css/main.css" rel="stylesheet">
   </head>
   <body>
-    <div class="card_editor card_editor-hidden" onClick="Controller.cancelEdit()">
-      <form method="POST" action="/cards" onSubmit="Controller.updateCard(event, this);" onClick="(e=>e.stopPropagation())(event)">
-        <input name="name" type="text" placeholder="enter card name" autocomplete="off" onSubmit="undefined">
-        <input name="list" type="hidden">
-        <input name="id" type="hidden">
-        <input name="order" type="hidden">
+    <div class="card_editor ${edited ? '' : 'card_editor-hidden' }">
+      <form method="POST" action="/nojs/cards/update">
+        <input name="name" value="${name}" type="text" placeholder="enter card name" autocomplete="off" onSubmit="undefined">
+        <input name="list" value="${list}" type="hidden">
+        <input name="id" value="${id}" type="hidden">
+        <input name="order" value="${order}" type="hidden">
         <input type="submit" value="SAVE CARD">
-      </form>
+      </form><a class="card_closeEditor" href="/"></a>
     </div>
     <div id="board"><% for (CardList list : lists) { %>
       <div class="list unselect" data-key="<%= list.getId() %>" key="<%= list.getId() %>">
-        <h1><%= list.getName() %></h1><% for (Card card : list.getCards()) { %>
-        <div class="card" data-key="<%= card.getId() %>" data-name="<%= card.getName() %>" data-list="<%= card.getList() %>" data-order="<%= card.getOrder() %>" onClick="Controller.openEditor(event, this)">
+        <h1><%= list.getName() %></h1><% for (Card card : list.getCards()) { %><a class="card" href="/cards/edit?edited=1&id=<%= card.getId() %>&name=<%= card.getName() %>&list=<%= card.getList() %>&order=<%= card.getOrder() %>" data-key="<%= card.getId() %>" data-name="<%= card.getName() %>" data-list="<%= card.getList() %>" data-order="<%= card.getOrder() %>">
           <div class="card_text"><%= card.getName() %></div>
-          <div class="card_del" onClick="Controller.deleteCard(event, <%= card.getId() %>)">X</div>
-        </div><% } %>
-        <form class="list_addcard" method="POST" action="/cards" onSubmit="Controller.addCard(event, this)">
+          <form class="card_del" method="POST" action="/">
+            <input name="id" value="<%= card.getId() %>" type="hidden">
+            <button type="submit" formaction="/nojs/cards/delete" value="X">X</button>
+          </form></a><% } %>
+        <form class="list_addcard" method="POST" action="/nojs/cards/add">
           <input name="name" type="text" placeholder="enter new card name" autocomplete="off" onSubmit="undefined">
           <input name="list" value="<%= list.getId() %>" type="hidden">
           <input name="order" value="<%= list.getCards().size() %>" type="hidden">

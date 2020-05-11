@@ -1,11 +1,19 @@
 hoverShift = 4px
 
+a_drop()
+  &:link
+    text-decoration none
+    color inherit
+  &:visited 
+    text-decoration none
+    color inherit
+
+
 button(size, clr = null, hoverColor = red)
   display flex
   flex-flow column nowrap
   align-items center
   justify-content center
-  position absolute
   border-radius 5px
   border 1px solid
   if (clr)
@@ -76,6 +84,7 @@ body
   margin 10px 0
   background-color #fff
   materialHover()
+  a_drop()
   &_text
     outline none
     display flex
@@ -103,9 +112,18 @@ body
       background-color #ddd
     &-hidden
       display none
+  &_closeEditor
+    z-index -100
+    position absolute
+    display block
+    height 100%
+    width 100%
   &_del
+    position absolute
     right 5px
     top 5px
-    button(20px)
+    >button[type='submit']
+      background-color transparent
+      button(20px)
     &-edited
       display none
