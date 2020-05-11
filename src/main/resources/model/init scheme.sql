@@ -37,11 +37,11 @@ CREATE TABLE IF NOT EXISTS `todolist`.`cards` (
   `idcard` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` MEDIUMTEXT NOT NULL,
   `description` MEDIUMTEXT NULL,
-  `order_in_list` INT UNSIGNED NOT NULL,
-  `list` BIGINT UNSIGNED NULL,
+  `order` BIGINT UNSIGNED NOT NULL,
+  `list` BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (`idcard`),
   INDEX `list_idx` (`list` ASC) VISIBLE,
-  UNIQUE INDEX `unique_list` (`list` ASC, `order_in_list` ASC) VISIBLE,
+  UNIQUE INDEX `unique_list` (`list` ASC, `order` ASC) VISIBLE,
   CONSTRAINT `list`
     FOREIGN KEY (`list`)
     REFERENCES `todolist`.`lists` (`idlist`)
@@ -59,3 +59,13 @@ GRANT ALL ON `todolist`.* TO 'todoapp';
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `todolist`.`lists`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `todolist`;
+INSERT INTO `todolist`.`lists` (`idlist`, `name`) VALUES (DEFAULT, 'shopping');
+INSERT INTO `todolist`.`lists` (`idlist`, `name`) VALUES (DEFAULT, 'job');
+
+COMMIT;
