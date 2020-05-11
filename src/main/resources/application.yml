@@ -15,7 +15,8 @@ spring:
     charset: UTF-8
     enabled: true
 
-  mvc.view.suffix: .jsp
-
+  mvc:
+    view.suffix: .jsp
+    ignore-default-model-on-redirect: true
 
 server.port: 8080
