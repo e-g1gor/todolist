@@ -17,11 +17,11 @@
         <input name="list" value="${list}" type="hidden">
         <input name="id" value="${id}" type="hidden">
         <input type="submit" value="SAVE CARD">
-      </form><a class="card_closeEditor" href="/"></a>
+      </form><a class="card_closeEditor" href="/?nojs=1"></a>
     </div>
     <div id="board"><% for (CardList list : lists) { %>
       <div class="list unselect" data-key="<%= list.getId() %>" key="<%= list.getId() %>">
-        <h1><%= list.getName() %></h1><% for (Card card : list.getCards()) { %><a class="card" href="?edited=1&id=<%= card.getId() %>&name=<%= card.getName() %>&list=<%= card.getList() %>&order=<%= card.getOrder() %>" data-key="<%= card.getId() %>" data-name="<%= card.getName() %>" data-list="<%= card.getList() %>" data-order="<%= card.getOrder() %>">
+        <h1><%= list.getName() %></h1><% for (Card card : list.getCards()) { %><a class="card" href="?nojs=1&edited=1&id=<%= card.getId() %>&name=<%= card.getName() %>&list=<%= card.getList() %>&order=<%= card.getOrder() %>" data-key="<%= card.getId() %>" data-name="<%= card.getName() %>" data-list="<%= card.getList() %>" data-order="<%= card.getOrder() %>">
           <div class="card_text"><%= card.getName() %></div>
           <form class="card_del" method="POST" action="/">
             <input name="id" value="<%= card.getId() %>" type="hidden">
