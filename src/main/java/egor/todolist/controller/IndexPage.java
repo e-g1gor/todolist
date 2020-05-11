@@ -20,6 +20,7 @@ public class IndexPage {
 
     @GetMapping({ "/"})
     public String hello(Model model, 
+    @RequestParam(value="nojs", required=false) Boolean nojs,
     @RequestParam(value="edited", required=false) Boolean edited,
     @RequestParam(value="name", required=false) String name,
     @RequestParam(value="id", required=false) Long id,
@@ -29,6 +30,7 @@ public class IndexPage {
         for (CardList list : lists)
             list.setCards(cardService.findByList(list.getId()));
             model.addAttribute("lists", lists);
+            model.addAttribute("nojs", nojs);
             model.addAttribute("edited", edited);
             model.addAttribute("name", name);
             model.addAttribute("id", id);

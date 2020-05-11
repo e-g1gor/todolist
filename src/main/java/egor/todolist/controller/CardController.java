@@ -23,20 +23,20 @@ public class CardController {
   public RedirectView deleteCard(Card newCard) {
       log.info(newCard.toString());
       cardService.deleteCard(newCard.getId());
-      return new RedirectView("/");
+      return new RedirectView("/?nojs=1");
   }
 
   @PostMapping(path = "/nojs/cards/add", consumes = "application/x-www-form-urlencoded")
   public RedirectView addCard(Card newCard) {
       log.info(newCard.toString());
       cardService.addCard(newCard);   
-      return new RedirectView("/");
+      return new RedirectView("/?nojs=1");
   }
 
   @PostMapping(path = "/nojs/cards/update", consumes = "application/x-www-form-urlencoded")
   public RedirectView udpateCard(Card newCard) {
       log.info(newCard.toString());
       cardService.updateCard(newCard);
-      return new RedirectView("/");
+      return new RedirectView("/?nojs=1");
   }
 }
