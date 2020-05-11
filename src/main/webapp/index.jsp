@@ -21,7 +21,7 @@
     </div>
     <div id="board"><% for (CardList list : lists) { %>
       <div class="list unselect" data-key="<%= list.getId() %>" key="<%= list.getId() %>">
-        <h1><%= list.getName() %></h1><% for (Card card : list.getCards()) { %><a class="card" href="/cards/edit?edited=1&id=<%= card.getId() %>&name=<%= card.getName() %>&list=<%= card.getList() %>&order=<%= card.getOrder() %>" data-key="<%= card.getId() %>" data-name="<%= card.getName() %>" data-list="<%= card.getList() %>" data-order="<%= card.getOrder() %>">
+        <h1><%= list.getName() %></h1><% for (Card card : list.getCards()) { %><a class="card" href="?edited=1&id=<%= card.getId() %>&name=<%= card.getName() %>&list=<%= card.getList() %>&order=<%= card.getOrder() %>" data-key="<%= card.getId() %>" data-name="<%= card.getName() %>" data-list="<%= card.getList() %>" data-order="<%= card.getOrder() %>">
           <div class="card_text"><%= card.getName() %></div>
           <form class="card_del" method="POST" action="/">
             <input name="id" value="<%= card.getId() %>" type="hidden">
